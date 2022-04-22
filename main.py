@@ -56,6 +56,7 @@ class Particle:
         if self._parent.swarm_best[1] > self.cost:
             self._parent._swarm_best = [self._position, self.cost]
 
+    @property
     def position(self):
         return self._position
 
@@ -98,6 +99,7 @@ if __name__ == '__main__':
     swarm = Swarm(40, 20, [-4.5, -4.5], [4.5, 4.5], [0.4, 0.2], np.random.uniform(0.4, 0.9), cost_fun)
     if swarm.optimize():
         print(swarm.swarm_best)
+    print(swarm.get_swarm())
 
     def cost3(x):
         return (1.5 - x[0] - x[2] * x[1]) ** 2 +\
@@ -108,3 +110,4 @@ if __name__ == '__main__':
     swarm = Swarm(40, 20, [-4.5, -4.5, -4.5], [4.5, 4.5, 4.5], [0.4, 0.2], np.random.uniform(0.4, 0.9), cost3)
     if swarm.optimize():
         print(swarm.swarm_best)
+    print(swarm.get_swarm())
