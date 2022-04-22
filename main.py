@@ -11,7 +11,7 @@ class Swarm:
             self._swarm.append(Particle(lb, ub, c, w, fun, self))
 
     def get_swarm(self):
-        return [particle._position for particle in self._swarm]
+        return [particle.position for particle in self._swarm]
 
     @property
     def swarm_best(self):
@@ -56,17 +56,17 @@ class Particle:
         if self._parent.swarm_best[1] > self.cost:
             self._parent._swarm_best = [self._position, self.cost]
 
-    def update(self, explore=False):
+    def position(self):
+        return self._position
 
+    def update(self, explore=False):
         # check boundaries
         possible_position = self._position + self._velocity
         for i in range(len(self._ub)):
             if possible_position[i] > self._ub[i] or possible_position[i] < self._lb[i]:
                 self._velocity[i] = -self._velocity[i]
-
         # count cost
         self._cost = self._fun(self._position)
-
         # update velocity
         # vx = w * x + c1 * (global - x) + c2(local - x)
         r = np.random.rand(2)
@@ -78,18 +78,14 @@ class Particle:
             self._velocity = self._w * self._velocity \
                              + self._c[0] * r[0] * (self._parent.swarm_best[0] - self._position) \
                              + self._c[1] * r[1] * (self._particle_best[0] - self._position)
-
         # update position
         self._position = self._position + self._velocity
-
         # update particle best
         if self._particle_best[1] > self._cost:
             self._particle_best = [self._position, self._cost]
-
         # update swarm best
         if self._parent.swarm_best[1] > self._cost:
             self._parent.swarm_best = [self._position, self._cost]
-
 
 
 if __name__ == '__main__':

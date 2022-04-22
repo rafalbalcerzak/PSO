@@ -2,11 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 import imageio
 import os
+from main import Swarm
 
-from main import Swarm, Particle
 
 def cost(x):
-    return (1.5 - x[0] - x[0] * x[1]) ** 2 +\
+    return (1.49 - x[0] - x[0] * x[1]) ** 2 +\
            (2.25 - x[0] + (x[0] * x[1]) ** 2) ** 2 +\
            (2.625 - x[0] + (x[0] * x[1]) ** 3) ** 2
 
