@@ -99,7 +99,7 @@ if __name__ == '__main__':
     swarm = Swarm(40, 20, [-4.5, -4.5], [4.5, 4.5], [0.4, 0.2], np.random.uniform(0.4, 0.9), cost_fun)
     if swarm.optimize():
         print(swarm.swarm_best)
-    print(swarm.get_swarm())
+
 
     def cost3(x):
         return (1.5 - x[0] - x[2] * x[1]) ** 2 +\
@@ -110,4 +110,31 @@ if __name__ == '__main__':
     swarm = Swarm(40, 20, [-4.5, -4.5, -4.5], [4.5, 4.5, 4.5], [0.4, 0.2], np.random.uniform(0.4, 0.9), cost3)
     if swarm.optimize():
         print(swarm.swarm_best)
-    print(swarm.get_swarm())
+
+
+    def bird_function(x):
+        return np.sin(x[0])*np.e**((1-np.cos(x[1]))**2) + \
+               np.cos(x[1])*np.e**((1-np.sin(x[0]))**2) + \
+               (x[0]+x[1])**2
+
+    bird = Swarm(50, 40, [-10, -10], [10,10], [0.4, 0.2], np.random.uniform(0.4, 0.9), bird_function)
+    if bird.optimize():
+        print(f'Mishra\'s Bird function{bird.swarm_best} global best[-3.1302, -1.5821] -106,76')
+
+    '''
+    import matplotlib.pyplot as plt
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    x = np.linspace(-2 * np.pi, 2 * np.pi, 100)
+    y = np.linspace(-2 * np.pi, 2 * np.pi, 100)
+    X, Y = np.meshgrid(x, y)
+    Z = bird_function([X, Y])
+    ax.set_xlabel("(x-axis)")
+    ax.set_ylabel("(y-axis)")
+    ax.set_zlabel("(z-axis)")
+    ax.plot_surface(X, Y, Z, cmap='plasma')
+    ax.contour3D(X, Y, Z)
+    plt.show()
+    '''
